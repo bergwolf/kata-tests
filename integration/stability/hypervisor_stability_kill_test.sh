@@ -7,7 +7,7 @@
 # This test will kill a running container's
 # hypervisor, and see how we react to cleanup.
 
-set -e
+set -e -x
 
 cidir=$(dirname "$0")
 
