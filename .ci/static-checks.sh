@@ -305,7 +305,7 @@ static_check_go_arch_specific()
 		go install -v "${linter_url}/..."
 	fi
 
-	local linter_args="run -c ${cidir}/.golangci.yml"
+	local linter_args="-v run -c ${cidir}/.golangci.yml"
 
 	# Non-option arguments other than "./..." are
 	# considered to be directories by $linter, not package names.
@@ -333,6 +333,7 @@ static_check_go_arch_specific()
 	info "Package paths:\n"
 	echo "$dirs" | sed 's/^ *//g' | tr ' ' '\n'
 
+	echo "$linter" "${linter_args}" "$dirs"
 	eval "$linter" "${linter_args}" "$dirs"
 }
 
@@ -342,7 +343,7 @@ static_check_rust_arch_specific()
 		return
 	fi
 
-	{ find . -type f -name "*.rs"  | egrep -v "target/|grpc-rs/|protocols/" | xargs rustfmt --check > /dev/null 2>&1; ret=$?; } || true
+	{ find . -type f -name "*.rs"  | egrep -v "target/|grpc-rs/|protocols/" | xargs rustfmt --check; ret=$?; } || true
 
 	[ $ret -eq 0 ] || die "crate not formatted by rustfmt."
 }
