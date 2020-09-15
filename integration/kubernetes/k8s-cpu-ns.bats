@@ -10,7 +10,6 @@ load "${BATS_TEST_DIRNAME}/../../lib/common.bash"
 issue="https://github.com/kata-containers/tests/issues/2574"
 
 setup() {
-	skip "test not working - see: ${issue}"
 	export KUBECONFIG="$HOME/.kube/config"
 	pod_name="constraints-cpu-test"
 	container_name="first-cpu-container"
@@ -25,7 +24,6 @@ setup() {
 }
 
 @test "Check CPU constraints" {
-	skip "test not working - see: ${issue}"
 	# Create the pod
 	kubectl create -f "${pod_config_dir}/pod-cpu.yaml"
 
@@ -54,6 +52,5 @@ setup() {
 }
 
 teardown() {
-	skip "test not working - see: ${issue}"
 	kubectl delete pod "$pod_name"
 }
